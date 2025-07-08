@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Marketing</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+    .question { margin-bottom: 20px; }
+    .question h3 { margin-bottom: 5px; }
+    .answers label { display: block; margin-left: 20px; }
+    .correct { background-color: #d4edda; }
+    .wrong { background-color: #f8d7da; }
+    button { padding: 10px 20px; font-size: 16px; margin-top: 20px; }
+    .result { font-weight: bold; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Quiz Marketing (20 Întrebări Aleatorii)</h1>
+  <form id="quizForm"></form>
+  <button type="button" onclick="checkAnswers()">Verifică Răspunsurile</button>
+  <button type="button" onclick="generateQuiz()">Reîncearcă cu alte întrebări</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    const allQuestions = [
+      {
+        text: "Principalul criteriu care a determinat diferențieri în modalitățile de aplicare practică a concepției de marketing îl reprezintă:",
+        options: {
+          a: "profilul activității economice",
+          b: "aria teritorială de desfășurare a activității economice",
+          c: "nivelul de organizare economică",
+          d: "obiectivul urmărit prin desfășurarea activității de marketing"
+        },
+        correct: "a"
+      },
+      {
+        text: "Care dintre următoarele domenii ale marketingului constituie o specializare a marketingului social?",
+        options: {
+          a: "marketingul turistic",
+          b: "marketingul educațional",
+          c: "marketingul agricol",
+          d: "marketingul bancar"
+        },
+        correct: "b"
+      },
+      {
+        text: "Care dintre următoarele elemente nu reprezintă o trăsătură caracteristică a orientării de marketing a activității unei firme moderne?",
+        options: {
+          a: "receptivitate față de cerințele societății",
+          b: "înaltă capacitate de adaptare a activității la evoluția cerințelor de consum",
+          c: "inventivitate, spirit creator, preocupări permanente pentru înnoire și modernizare",
+          d: "viziune analitică asupra fiecărei activități care alcătuiește ciclul economic complet al bunurilor și serviciilor"
+        },
+        correct: "d"
+      },
+      {
+        text: "Revista 'Journal of Marketing' este editată de:",
+        options: {
+          a: "A.M.A.",
+          b: "ADETEM",
+          c: "AROMAR",
+          d: "ESOMAR"
+        },
+        correct: "a"
+      },
+      {
+        text: "În țara noastră, marketingul a fost introdus ca obiect de studiu în învățământul superior economic începând cu anul universitar:",
+        options: {
+          a: "1933/1934",
+          b: "1965/1966",
+          c: "1971/1972",
+          d: "1990/1991"
+        },
+        correct: "b"
+      },
+      {
+        text: "Care dintre următoarele domenii ale marketingului nu constituie o specializare a marketingului serviciilor?",
+        options: {
+          a: "marketingul turistic",
+          b: "marketingul transporturilor",
+          c: "marketingul agricol",
+          d: "marketingul bancar"
+        },
+        correct: "c"
+      },
+      {
+        text: "În periodizarea propusă de Robert Bartels, deceniul al patrulea al secolului nostru este cel al:",
+        options: {
+          a: "dezvoltării marketingului",
+          b: "integrării marketingului",
+          c: "conceptualizării marketingului",
+          d: "reevaluării marketingului"
+        },
+        correct: "c"
+      },
+      {
+        text: "În definirea marketingului social și societal, Philip Kotler include:",
+        options: {
+          a: "orientarea activității firmei către interesul public",
+          b: "aplicarea marketingului în instituții sociale",
+          c: "desfășurarea de acțiuni sociale în firmă",
+          d: "nici una din cele trei variante de mai sus"
+        },
+        correct: "a"
+      },
+      {
+        text: "În concepția lui Philip Kotler, marketingul social obligă firmele să aibă în vedere:",
+        options: {
+          a: "profiturile firmei",
+          b: "satisfacția consumatorilor",
+          c: "interesul public",
+          d: "toate cele trei elemente de mai sus"
+        },
+        correct: "d"
+      },
+      {
+        text: "În viziunea școlii românești de marketing, o definiție cuprinzătoare a marketingului ar trebui să includă următoarele elemente:",
+        options: {
+          a: "o concepție modernă asupra orientării, organizării și desfășurării activității economice; un ansamblu de activități practice nestructurate; o înaltă capacitate de adaptare",
+          b: "setul de activități prin care eșafodajul cererii pentru bunuri, idei și servicii este dirijat pentru a favoriza procesul schimbului; un instrumentar științific; spirit de colaborare",
+          c: "o concepție modernă asupra orientării, organizării și desfășurării activității economice; un instrumentar empiric; viziune unitară asupra pieței",
+          d: "o concepție modernă asupra orientării, organizării și desfășurării activității economice; utilizarea unui ansamblu de metode și tehnici științifice; un ansamblu coerent de activități practice"
+        },
+        correct: "d"
+      },
+      {
+        text: "Care dintre grupările de mai jos conține integral funcții ale marketingului, potrivit școlii românești de marketing?",
+        options: {
+          a: "vânzarea, cumpărarea, maximizarea profitului",
+          b: "maximizarea profitului, investigarea pieței, a necesităților de consum, satisfacerea în condiții superioare a nevoilor de utilizare și/sau consum",
+          c: "satisfacerea în condiții superioare a nevoilor de utilizare și/sau consum, investigarea pieței, a necesităților de consum, standardizarea",
+          d: "maximizarea profitului, investigarea pieței, a necesităților de consum, vânzarea"
+        },
+        correct: "c"
+      },
+      {
+        text: "Funcția-premisă a marketingului este:",
+        options: {
+          a: "maximizarea eficienței economice (a profitului)",
+          b: "satisfacerea în condiții superioare a nevoilor de consum",
+          c: "conectarea dinamică a întreprinderii la mediul economico-social",
+          d: "investigarea pieței, a necesităților de consum"
+        },
+        correct: "d"
+      },
+      {
+        text: "Potrivit opiniei școlii românești de marketing, momentul apariției marketingului este plasat:",
+        options: {
+          a: "în antichitate",
+          b: "în prima jumătate a secolului al XIX-lea",
+          c: "la începutul secolului XX",
+          d: "după cel de-al doilea război mondial"
+        },
+        correct: "c"
+      }
+    ];
+
+    let selectedAnswers = {};
+    function generateQuiz() {
+      const shuffled = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 20);
+      const form = document.getElementById("quizForm");
+      form.innerHTML = "";
+      selectedAnswers = {};
+
+      shuffled.forEach((q, index) => {
+        const qId = `q${index + 1}`;
+        selectedAnswers[qId] = q.correct;
+
+        const div = document.createElement("div");
+        div.className = "question";
+
+        const title = document.createElement("h3");
+        title.textContent = `${index + 1}. ${q.text}`;
+        div.appendChild(title);
+
+        const answersDiv = document.createElement("div");
+        answersDiv.className = "answers";
+        for (let key in q.options) {
+          const label = document.createElement("label");
+          label.innerHTML = `<input type="radio" name="${qId}" value="${key}"> ${key}) ${q.options[key]}`;
+          label.setAttribute("data-qid", qId);
+          label.setAttribute("data-key", key);
+          answersDiv.appendChild(label);
+        }
+        div.appendChild(answersDiv);
+        form.appendChild(div);
+      });
+
+      document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      const labels = document.querySelectorAll("label[data-qid]");
+      labels.forEach(label => label.classList.remove("correct", "wrong"));
+
+      for (let q in selectedAnswers) {
+        const correct = selectedAnswers[q];
+        const selected = document.querySelector(`input[name='${q}']:checked`);
+        const labels = document.querySelectorAll(`label[data-qid='${q}']`);
+        labels.forEach(label => {
+          const key = label.getAttribute("data-key");
+          if (key === correct) {
+            label.classList.add("correct");
+          } else if (selected && selected.value === key) {
+            label.classList.add("wrong");
+          }
+        });
+        if (selected && selected.value === correct) {
+          score++;
+        }
+      }
+
+      document.getElementById("result").textContent = `Ai răspuns corect la ${score} din 20 de întrebări.`;
+    }
+
+    window.onload = generateQuiz;
+  </script>
+</body>
+</html>
